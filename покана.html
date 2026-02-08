@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сватбена покана</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: #f7f6f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: serif;
+}
+
+#envelope {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  background: #eeeae0;
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#seal {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: #7a2b2b;
+  border-radius: 50%;
+  top: 70px;
+  left: 120px;
+  color: #fff;
+  font-size: 22px;
+  border: none;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+  -webkit-appearance: none;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+#invitation {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+}
+
+#invitation img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #f7f6f2;
+}
+
+#confirm {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #a6b7a2;
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 18px;
+  text-decoration: none;
+  display: none;
+}
+
+.open #invitation,
+.open #confirm {
+  display: block;
+}
+</style>
+</head>
+
+<body>
+
+<div id="envelope">
+  <button id="seal" aria-label="Отвори поканата">
+  С & И
+</button>
+
+</div>
+
+<div id="invitation">
+  <img src="Сватбена покана.png" alt="Сватбена покана">
+</div>
+
+<a id="confirm" href="https://m.me/iliqn.yonkov.7" target="_blank">
+  Потвърди присъствие
+</a>
+
+<audio id="music" src="music.mp3"></audio>
+
+<script>
+const seal = document.getElementById("seal");
+const music = document.getElementById("music");
+
+function openInvite() {
+  document.body.classList.add("open");
+
+  if (music) {
+    music.muted = false;
+    music.play().catch(() => {});
+  }
+}
+
+seal.addEventListener("click", openInvite);
+seal.addEventListener("touchend", openInvite);
+</script>
+
+</body>
+</html>
