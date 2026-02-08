@@ -100,12 +100,18 @@ body {
 #invitation {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100dvh;
+  inset: 0;
   background: #f7f6f2;
   z-index: 9999;
+
+  /* КЛЮЧОВОТО */
+  
+  justify-content: center;
+  align-items: center;
+
+  /* iPhone safe-area */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 #invitation img {
@@ -142,7 +148,7 @@ body {
 }
 
 .open #invitation {
-  display: block;
+  display: flex;
 }
 </style>
 </head>
