@@ -148,6 +148,8 @@ body.open #invitation {
   border: 2px solid #6f8b6b;
   color: #6f8b6b;
   background: white;
+  animation: pulse 2s infinite;
+
 }
 
 
@@ -212,8 +214,8 @@ body.open #invitation {
 
 <div id="rsvp">
 
-<a href="https://m.me/stiliiana.pencheva?text=Да,%20ще%20присъствам" target="_blank">
-Потвърди присъствие
+<a id="confirm" href="https://m.me/stiliiana.pencheva" target="_blank">
+Пишете ни за потвърждение
 </a>
 
 </div>
@@ -227,7 +229,7 @@ body.open #invitation {
 const seal = document.getElementById("seal")
 const music = document.getElementById("music")
 const rsvp = document.getElementById("rsvp")
-
+const confirmBtn = document.querySelector("#rsvp a")
 
 function createLeaves(){
 
@@ -235,12 +237,9 @@ for(let i=0;i<25;i++){
 
 const leaf = document.createElement("div")
 leaf.className="leaf"
-
 leaf.style.left = Math.random()*100+"vw"
 leaf.style.animationDuration = (4+Math.random()*4)+"s"
-
 document.body.appendChild(leaf)
-
 setTimeout(()=>leaf.remove(),8000)
 
 }
@@ -249,46 +248,62 @@ setTimeout(()=>leaf.remove(),8000)
 
 
 function createSparkles(){
-
-for(let i=0;i<35;i++){
-
-const spark = document.createElement("div")
-spark.className="spark"
-
-spark.style.left = Math.random()*100+"vw"
-spark.style.animationDuration = (3+Math.random()*3)+"s"
-
-document.body.appendChild(spark)
-
-setTimeout(()=>spark.remove(),6000)
+ for(let i=0;i<35;i++){
+  const spark = document.createElement("div")
+  spark.className="spark"
+  spark.style.left = Math.random()*100+"vw"
+  spark.style.animationDuration = (3+Math.random()*3)+"s"
+  document.body.appendChild(spark)
+  setTimeout(()=>spark.remove(),6000)
+ }
 
 }
 
-}
+function fadeOutMusic(audio, duration = 1000) {
+  let volume = audio.volume;
+  const step = volume / (duration / 50);
 
+  const fade = setInterval(() => {
+    volume -= step;
+
+    if (volume <= 0) {
+      audio.volume = 0;
+      audio.pause();
+      audio.currentTime = 0;
+      clearInterval(fade);
+    } else {
+      audio.volume = volume;
+    }
+  }, 50);
+}
 
 function openInvite(){
+ document.body.classList.add("open")
+ music.muted=false
+ music.play().catch(()=>{})
 
-document.body.classList.add("open")
-
-music.muted=false
-music.play().catch(()=>{})
-
-setTimeout(()=>{
-
-createLeaves()
-createSparkles()
-
-rsvp.style.display="flex"
-
-},1200)
+ setTimeout(()=>{
+ createLeaves()
+ createSparkles()
+ rsvp.style.display="flex"
+ },1200)
 
 }
 
 seal.addEventListener("click",openInvite,{once:true})
 
-</script>
+confirmBtn.addEventListener("click", (e) => {
+  e.preventDefault();
 
+  fadeOutMusic(music, 1200); // плавно затихване
+
+  setTimeout(() => {
+    window.open(confirmBtn.href, "_blank");
+  }, 400)
+})
+
+
+</script>
 </body>
 </html>
 
