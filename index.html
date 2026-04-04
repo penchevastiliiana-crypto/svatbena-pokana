@@ -38,6 +38,7 @@ body {
 body.open #envelope {
   opacity: 0;
   pointer-events: none;
+  transition: opacity .8s ease 2s;
 }
 
 
@@ -45,13 +46,16 @@ body.open #envelope {
 
 #flap {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
-  background: #eeeae0;
-  clip-path: polygon(0 0,100% 0,50% 55%);
+  height: 110px;
+  background: #e9e4da;
+  clip-path: polygon(0 0,100% 0,50% 100%);
+  border-bottom: 1.5px solid #d2cec4;
   transform-origin: top;
   transition: transform 1s ease;
-  z-index: 3;
+  z-index: 2;
 }
 
 body.open #flap {
@@ -65,7 +69,7 @@ body.open #flap {
   position: absolute;
   width: 80px;
   height: 80px;
-  background: #7a2b2b;
+  background: #186e32;
   border-radius: 50%;
   top: 70px;
   left: 130px;
@@ -149,7 +153,6 @@ body.open #invitation {
   color: #6f8b6b;
   background: white;
   animation: pulse 2s infinite;
-
 }
 
 
@@ -295,15 +298,15 @@ seal.addEventListener("click",openInvite,{once:true})
 confirmBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  fadeOutMusic(music, 1200); // плавно затихване
+  fadeOutMusic(music, 1200);
 
   setTimeout(() => {
     window.open(confirmBtn.href, "_blank");
   }, 400)
 })
 
-
 </script>
+
 </body>
 </html>
 
